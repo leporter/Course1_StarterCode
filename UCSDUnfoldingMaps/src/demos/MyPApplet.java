@@ -20,15 +20,16 @@ public class MyPApplet extends PApplet{
 		background(255);			//set canvas color
 		stroke(0);				//set pen color
 		img = loadImage("palmTrees.jpg", "jpg");
-		img.resize(0, height);			//resize loaded image to full height of canvas
-		image(img, 0, 0);			//display image 
 	}
 	
 	public void draw() {
 		//Add drawing code for MyPApplet
+		img.resize(0, height);			//resize loaded image to full height of canvas
+		image(img, 0, 0);			//display image 
 		int[] color = sunColorSec(second());		//calculate color code for sun
 		fill(color[0],color[1],color[2]);	//set sun color
 		ellipse(width/4,height/5,width/4,height/5);	//draw sun
+		
 	}
 	
 	/** Return the RGB color of the sun at this number of seconds in the minute */
@@ -36,7 +37,7 @@ public class MyPApplet extends PApplet{
 	{
 		int[] rgb = new int[3];
 		// Scale the brightness of the yellow based on the seconds.  0 seconds 
-		// is black.  30 seconds is bright yellow.
+		// is bright yellow.  30 seconds is black.
 		float diffFrom30 = Math.abs(30-seconds);
 		
 		float ratio = diffFrom30/30;
