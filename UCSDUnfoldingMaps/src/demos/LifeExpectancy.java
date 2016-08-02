@@ -11,6 +11,7 @@ import de.fhpotsdam.unfolding.data.Feature;
 import de.fhpotsdam.unfolding.data.GeoJSONReader;
 
 import java.util.HashMap;
+import java.util.Map;
 
 
 import de.fhpotsdam.unfolding.marker.Marker;
@@ -25,7 +26,7 @@ import de.fhpotsdam.unfolding.marker.Marker;
 public class LifeExpectancy extends PApplet {
 
 	UnfoldingMap map;
-	HashMap<String, Float> lifeExpMap;
+	Map<String, Float> lifeExpByCountry;
 	List<Feature> countries;
 	List<Marker> countryMarkers;
 
@@ -35,8 +36,8 @@ public class LifeExpectancy extends PApplet {
 		MapUtils.createDefaultEventDispatcher(this, map);
 
 		// Load lifeExpectancy data
-		lifeExpMap = loadLifeExpectancyFromCSV("LifeExpectancyWorldBankModule3.csv");
-		println("Loaded " + lifeExpMap.size() + " data entries");
+		lifeExpByCountry = loadLifeExpectancyFromCSV("LifeExpectancyWorldBankModule3.csv");
+		println("Loaded " + lifeExpByCountry.size() + " data entries");
 		
 
 		// Load country polygons and adds them as markers
@@ -60,8 +61,8 @@ public class LifeExpectancy extends PApplet {
 		for (Marker marker : countryMarkers) {
 			// Find data for country of the current marker
 			String countryId = marker.getId();
-			if (lifeExpMap.containsKey(countryId)) {
-				float lifeExp = lifeExpMap.get(countryId);
+			if (lifeExpByCountry.containsKey(countryId)) {
+				float lifeExp = lifeExpByCountry.get(countryId);
 				// Encode value as brightness (values range: 40-90)
 				int colorLevel = (int) map(lifeExp, 40, 90, 10, 255);
 				marker.setColor(color(255-colorLevel, 100, colorLevel));
@@ -73,8 +74,8 @@ public class LifeExpectancy extends PApplet {
 	}
 
 	//Helper method to load life expectancy data from file
-	private HashMap<String, Float> loadLifeExpectancyFromCSV(String fileName) {
-		HashMap<String, Float> lifeExpMap = new HashMap<String, Float>();
+	private Map<String, Float> loadLifeExpectancyFromCSV(String fileName) {
+		Map<String, Float> lifeExpMap = new HashMap<String, Float>();
 
 		String[] rows = loadStrings(fileName);
 		for (String row : rows) {
