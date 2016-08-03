@@ -16,11 +16,14 @@ public abstract class EarthquakeMarker extends SimplePointMarker
 	// Did the earthquake occur on land?  This will be set by the subclasses.
 	protected boolean isOnLand;
 
-	// The radius of the Earthquake marker
+	// SimplePointMarker has a field "radius" which is inherited
+	// by Earthquake marker:
+	// protected float radius;
+	//
 	// You will want to set this in the constructor, either
 	// using the thresholds below, or a continuous function
 	// based on magnitude. 
-	protected float radius;
+  
 	
 	
 	/** Greater than or equal to this threshold is a moderate earthquake */
